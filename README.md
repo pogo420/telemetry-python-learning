@@ -5,6 +5,7 @@ Learning open telemetry
 ### Automatic instrument
 * Install additional `opentelemetry-bootstrap -a install`
 * Runnig the application `opentelemetry-instrument --traces_exporter console --metrics_exporter console --logs_exporter console flask run -p 8080`
+* Or, Run the via `opentelemetry-instrument --traces_exporter console --metrics_exporter console flask run -p 8080`
 
 ### Analyzing a automatic instrument
 ```
