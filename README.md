@@ -234,6 +234,7 @@ Learning open telemetry
 
 
 ### Links:
-* Open telemetry python api [link](https://opentelemetry.io/docs/instrumentation/python/)
-* Jaerger getting started [link](https://www.jaegertracing.io/docs/1.46/getting-started/)
-* integration tutorial [link](https://www.aspecto.io/blog/getting-started-with-opentelemetry-python/)
+* Open telemetry python api [link](https://opentelemetry.io/docs/instrumentation/python/).
+* Jaerger getting started [link](https://www.jaegertracing.io/docs/1.46/getting-started/).
+* integration tutorial [link](https://www.aspecto.io/blog/getting-started-with-opentelemetry-python/).
+* Open telemetry [concepts](https://opentelemetry.io/docs/concepts/).
