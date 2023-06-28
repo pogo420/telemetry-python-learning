@@ -39,11 +39,19 @@ app = Flask(__name__)
 
 
 def do_roll() -> int:
+    with tracer.start_as_current_span("do_compute") as compute_span:
+        response = get("http://localhost:8080/doCompute")
+        compute_span.set_attribute("compute.duration", response.text)
+
+    with tracer.start_as_current_span("do_sleep") as sleep_span:
+        dur = randint(1,10)/1000
+        sleep(dur)
+        compute_span.set_attribute("sleep.duration", dur)
+
     with tracer.start_as_current_span("do_roll") as roll_span:
         res = randint(1, 6)
         roll_span.set_attribute("roll.value", res)
         roll_counter.add(1, {"roll.value": res})
-        get("http://localhost:8080/doCompute")
         return res
 
 
