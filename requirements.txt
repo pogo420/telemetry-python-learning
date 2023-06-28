@@ -1,6 +1,8 @@
 flask
 pytest
 pytest-mock
+requests
+
 # open telemetry specific
 opentelemetry-api
 opentelemetry-sdk

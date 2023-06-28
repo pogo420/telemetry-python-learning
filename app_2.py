@@ -13,7 +13,7 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 # Boiler plate code for enabling jaeger, below
 trace.set_tracer_provider(
     TracerProvider(
-        resource=Resource.create({SERVICE_NAME: "dice_roller"})
+        resource=Resource.create({SERVICE_NAME: "dummy_compute"})
     )
 )
 jaeger_exporter = JaegerExporter(
@@ -26,28 +26,21 @@ trace.get_tracer_provider().add_span_processor(
 # Boiler plate code for enabling jaeger, above
 
 # generating the tracer
-tracer = trace.get_tracer("diceroller.tracer")
+tracer = trace.get_tracer("dummy_compute.tracer")
 
-# generating the meters
-meter = metrics.get_meter("diceroller.meter")
-
-# creating counter
-roll_counter = meter.create_counter("roll_counter", description="number of rolls")
 
 # Application object
 app = Flask(__name__)
 
 
-def do_roll() -> int:
-    with tracer.start_as_current_span("do_roll") as roll_span:
-        res = randint(1, 6)
-        roll_span.set_attribute("roll.value", res)
-        roll_counter.add(1, {"roll.value": res})
-        get("http://localhost:8080/doCompute")
-        return res
+def dummy() -> float:
+    with tracer.start_as_current_span("dummy") as roll_span:
+        random_compute = randint(1, 10)/1000
+        sleep(random_compute)
+        roll_span.set_attribute("computeTime.value", random_compute)
+        return random_compute
 
 
-@app.route("/rolldice")
-def roll_dice() -> str:
-    return str(do_roll())
-
+@app.route("/doCompute")
+def do_compute() -> str:
+    return str(dummy())
