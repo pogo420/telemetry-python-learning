@@ -1,6 +1,26 @@
 from random import randint
 from flask import Flask
+
 from opentelemetry import trace, metrics
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
+from opentelemetry.sdk.resources import SERVICE_NAME, Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+# Boiler plate code for enabling jaeger, below
+trace.set_tracer_provider(
+    TracerProvider(
+        resource=Resource.create({SERVICE_NAME: "dice_roller"})
+    )
+)
+jaeger_exporter = JaegerExporter(
+    agent_host_name="localhost",
+    agent_port=6831,
+)
+trace.get_tracer_provider().add_span_processor(
+    BatchSpanProcessor(jaeger_exporter)
+)
+# Boiler plate code for enabling jaeger, above
 
 # generating the tracer
 tracer = trace.get_tracer("diceroller.tracer")
@@ -17,7 +37,7 @@ app = Flask(__name__)
 
 def do_roll() -> int:
     with tracer.start_as_current_span("do_roll") as roll_span:
-        res = randint(1,6)
+        res = randint(1, 6)
         roll_span.set_attribute("roll.value", res)
         roll_counter.add(1, {"roll.value": res})
         return res
@@ -26,4 +46,3 @@ def do_roll() -> int:
 @app.route("/rolldice")
 def roll_dice() -> str:
     return str(do_roll())
-

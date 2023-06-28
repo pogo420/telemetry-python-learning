@@ -228,3 +228,12 @@ Learning open telemetry
 }
 ```
 
+### Enabling jaeger collector
+* run `./start_jaeger.sh`
+* check the [url](http://localhost:16686) to access jaeger ui.
+
+
+### Links:
+* Open telemetry python api [link](https://opentelemetry.io/docs/instrumentation/python/)
+* Jaerger getting started [link](https://www.jaegertracing.io/docs/1.46/getting-started/)
+* integration tutorial [link](https://www.aspecto.io/blog/getting-started-with-opentelemetry-python/)
