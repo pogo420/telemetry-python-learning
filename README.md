@@ -1,12 +1,33 @@
 # telemetry-python-learning
 Learning open telemetry 
 
+## Concepts
+* Traces: Path of request
+* Span: Workers inside a trace.
+* Each request will have a trace id and associated span ids.
+* Metrics are time based stats
 
+## Steps to follow
+### Install Docker in system
+### Enable apps
+* `flask --app app.py run -p 8080`
+* `flask --app app_2.py run -p 8081`
+### Enabling jaeger collector
+* run `./start_jaeger.sh`
+* check the [url](http://localhost:16686) to access jaeger ui.
+* Jaeger ui with traces
+![](images/jaeger_ui.png)
+* A trace showing multiple spans
+![](images/spans_in_a_trace.png)
+* Attributes of a span
+![](images/span_attributes.png)
+* Span tree in a trace
+![](images/span_tree.png)
+## Additional docs
 ### Automatic instrument
 * Install additional `opentelemetry-bootstrap -a install`
 * Runnig the application `opentelemetry-instrument --traces_exporter console --metrics_exporter console --logs_exporter console flask run -p 8080`
 * Or, Run the via `opentelemetry-instrument --traces_exporter console --metrics_exporter console flask run -p 8080`
-
 ### Analyzing a automatic instrument
 ```
 127.0.0.1 - - [26/Jun/2023 12:08:17] "GET /rolldice HTTP/1.1" 200 -
@@ -228,12 +249,8 @@ Learning open telemetry
 }
 ```
 
-### Enabling jaeger collector
-* run `./start_jaeger.sh`
-* check the [url](http://localhost:16686) to access jaeger ui.
 
-
-### Links:
+## Links:
 * Open telemetry python api [link](https://opentelemetry.io/docs/instrumentation/python/).
 * Jaerger getting started [link](https://www.jaegertracing.io/docs/1.46/getting-started/).
 * integration tutorial [link](https://www.aspecto.io/blog/getting-started-with-opentelemetry-python/).
